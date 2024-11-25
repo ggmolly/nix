@@ -14,6 +14,21 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelParams = [ "ip=192.168.0.38::192.168.0.1:255.255.255.0:formidable::9.9.9.9" ];
+  boot.initrd = {
+    availableKernelModules = ["mt7921e"];
+    systemd.users.root.shell = "/bin/cryptsetup-askpass";
+    network = {
+       enable = true;
+       ssh = {
+         enable = true;
+         port = 22;
+         authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDlSU9uPDhrLwcZ9gH5HZgLjUbpn66cxvUFjOlhUSCKk" ];
+         hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" ];
+       };
+    };
+  };
+
 
   networking.hostName = "formidable"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -32,15 +47,15 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "fr_FR.UTF-8";
-    LC_IDENTIFICATION = "fr_FR.UTF-8";
-    LC_MEASUREMENT = "fr_FR.UTF-8";
-    LC_MONETARY = "fr_FR.UTF-8";
-    LC_NAME = "fr_FR.UTF-8";
-    LC_NUMERIC = "fr_FR.UTF-8";
-    LC_PAPER = "fr_FR.UTF-8";
-    LC_TELEPHONE = "fr_FR.UTF-8";
-    LC_TIME = "fr_FR.UTF-8";
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
   };
 
   services.xserver = {
@@ -55,7 +70,7 @@
   };
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us";
+    layout = "us,fr";
     variant = "";
   };
 
@@ -102,6 +117,11 @@
       pkgs.xkb-switch-i3
       pkgs.libnotify
       pkgs.feh
+      pkgs.freetube
+      pkgs.bun
+      pkgs.mpv
+      pkgs.air
+      pkgs.dbeaver-bin
     ];
 
 
@@ -124,9 +144,12 @@
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
-    go
     python310
     python312
+    go
+    gcc
+    clang
+    libcap
   ];
 
   hardware.opengl = {
