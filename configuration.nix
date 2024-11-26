@@ -14,9 +14,9 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelParams = [ "ip=192.168.0.38::192.168.0.1:255.255.255.0:formidable::9.9.9.9" ];
+  boot.kernelParams = [ "ip=dhcp" ];
   boot.initrd = {
-    availableKernelModules = ["mt7921e"];
+    availableKernelModules = ["r8169"];
     systemd.users.root.shell = "/bin/cryptsetup-askpass";
     network = {
        enable = true;
@@ -142,7 +142,7 @@
     htop
     git
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
     python310
     python312
@@ -152,7 +152,7 @@
     libcap
   ];
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
   };
 
@@ -186,6 +186,10 @@
 
 
   networking.firewall.enable = false;
+
+  nix.extraOptions = ''
+    trusted-users = root molly
+  '';
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
