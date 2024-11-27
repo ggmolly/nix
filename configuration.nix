@@ -87,6 +87,14 @@
   programs = {
     zsh = {
       enable = true;
+      enableCompletion = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
+      
+      shellAliases = {
+        ll = "ls -l";
+        ls = "eza";
+      };
       oh-my-zsh = {
         enable = true;
         theme = "fishy";
