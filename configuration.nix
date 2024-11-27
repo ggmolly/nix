@@ -31,7 +31,7 @@
 
 
   networking.hostName = "formidable"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -87,6 +87,10 @@
   programs = {
     zsh = {
       enable = true;
+      oh-my-zsh = {
+        enable = true;
+        theme = "fishy";
+      };
     };
   };
 
@@ -190,6 +194,8 @@
   nix.extraOptions = ''
     trusted-users = root molly
   '';
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
